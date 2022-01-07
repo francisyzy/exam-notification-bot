@@ -2,8 +2,7 @@ name: Scheduled Message
 # This workflow is triggered at a scheduled interval of every 30 minutes
 on:
   schedule:
-    # * is a special character in YAML so you have to quote this string.
-    # /30 denotes that it will run once every 30 minutes
+    # https://crontab.guru/#50_8_*_*_0
     - cron:  '50 8 * * 0'
 
 jobs:

@@ -27,8 +27,8 @@ const helper = () => {
   });
 
   bot.help((ctx) =>
-    ctx.reply(
-      "Hi, send a link like the following and I will set your exam reminder. https://nusmods.com/timetable/sem-2/share?CS1231S=TUT:09,LEC:1&CS2106=LAB:07,TUT:12,LEC:1&ES2660=SEC:G18&GEC1015=LEC:3&MA1521=LEC:1,TUT:1",
+    ctx.replyWithHTML(
+      `Hi ${ctx.from.first_name}, send a link like the following from <a href="https://nusmods.com/timetable/sem-2">nusmods</a> and I will set your exam reminder. https://nusmods.com/timetable/sem-2/share?CS1231S=TUT:09,LEC:1&CS2106=LAB:07,TUT:12,LEC:1&ES2660=SEC:G18&GEC1015=LEC:3&MA1521=LEC:1,TUT:1\n\n<i>For bug reports, please create an issue at <a href="http://go.francisyzy.com/exam-reminder-bot-issues">Github</a></i>`,
     ),
   );
 };
