@@ -19,12 +19,12 @@ const parseURL = () => {
     modulesString = modulesString.slice(0, -2);
     if (modules.length === 0) {
       return ctx.reply(
-        "Please send your share/sync link. Like https://nusmods.com/timetable/sem-2/share?CS1231S=TUT:09,LEC:1&CS2106=LAB:07,TUT:12,LEC:1&ES2660=SEC:G18&GEC1015=LEC:3&MA1521=LEC:1,TUT:1",
+        "Please send your share/sync link. Like https://nusmods.com/timetable/sem-2/share?CS1231S=TUT:01,LEC:1&CS2106=LAB:02,TUT:09,LEC:1&ES2660=SEC:G16&GEC1015=LEC:3&MA1521=LEC:1,TUT:8",
       );
     }
     await prisma.user.update({
       where: { telegramId: ctx.from.id },
-      data: { modules: modules },
+      data: { modules: modules, firstExam: null },
     });
     ctx.reply(
       `You have registered the following modules: ${modulesString}`,
