@@ -54,6 +54,7 @@ if (process.env.NODE_ENV === "production") {
 helper();
 parseURL();
 const today = new Date();
+console.log(today);
 if (isSunday(today) && isThisHour(9) && isThisMinute(15)) {
   notifyExams();
 }
