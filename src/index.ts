@@ -9,6 +9,8 @@ import helper from "./commands/helper";
 import { toEscapeHTMLMsg } from "./utils/messageHandler";
 import catchAll from "./commands/catch-all";
 import parseURL from "./commands/parse";
+import { notifyExams } from "./utils/notifier";
+import { isSunday, isThisMinute, isThisHour } from "date-fns";
 
 //Production Settings
 if (process.env.NODE_ENV === "production") {
@@ -51,6 +53,10 @@ if (process.env.NODE_ENV === "production") {
 
 helper();
 parseURL();
+const today = new Date();
+if (isSunday(today) && isThisHour(9) && isThisMinute(15)) {
+  notifyExams();
+}
 
 //Catch all unknown messages/commands
 catchAll();
