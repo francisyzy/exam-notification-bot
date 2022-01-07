@@ -1,5 +1,6 @@
 import got from "got";
 import { Module } from "../types/nusmods";
+import { quote, quotes } from "../types/quotes";
 
 export async function getModule(moduleCode: string): Promise<Module> {
   return (await got(
@@ -17,4 +18,14 @@ export async function checkExist(
   );
 
   return statusCode === 200;
+}
+
+export async function getQuote(): Promise<quote> {
+  const quotes = (await got(
+    `https://type.fit/api/quotes`,
+  ).json()) as quotes;
+
+  const randIndex = Math.floor(Math.random() * quotes.length);
+
+  return quotes[randIndex];
 }
