@@ -1,8 +1,11 @@
 import bot from "../lib/bot";
 import { PrismaClient } from "@prisma/client";
 import { URL } from "url";
+import { checkExist, getModule } from "../utils/getData";
 
 const prisma = new PrismaClient();
+
+const semester = 2;
 
 const parseURL = () => {
   bot.hears(/nusmods.com/, async (ctx) => {
@@ -23,8 +26,33 @@ const parseURL = () => {
       where: { telegramId: ctx.from.id },
       data: { modules: modules },
     });
-    return ctx.reply(
+    ctx.reply(
       `You have registered the following modules: ${modulesString}`,
+    );
+
+    let examDates: Date[] = [];
+    for await (const module of modules) {
+      if (await checkExist(module)) {
+        const examDate = (await getModule(module)).semesterData[
+          semester - 1
+        ].examDate;
+        if (examDate) {
+          examDates.push(new Date(examDate));
+        }
+      }
+    }
+    examDates.sort(
+      (date1, date2) => date1.getTime() - date2.getTime(),
+    );
+    if (examDates.length === 0) {
+      return ctx.reply("You have no exams");
+    }
+    await prisma.user.update({
+      where: { telegramId: ctx.from.id },
+      data: { firstExam: examDates[0] },
+    });
+    return ctx.reply(
+      `Your first exam is on the ${examDates[0].toString()}`,
     );
   });
 };

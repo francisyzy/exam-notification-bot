@@ -11,9 +11,10 @@ generator client {
 }
 
 model User {
-  telegramId Int      @id
+  telegramId Int       @id
   name       String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now()) @updatedAt
   modules    String[]
+  firstExam  DateTime?
 }
