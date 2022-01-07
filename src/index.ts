@@ -52,12 +52,18 @@ if (process.env.NODE_ENV === "production") {
 
 helper();
 parseURL();
-app.get("/", (req, res) => res.send("Express + TypeScript Server"));
-const today = new Date();
-console.log(today);
-if (isSunday(today) && isThisHour(9) && isThisMinute(15)) {
-  notifyExams();
-}
+const shouldNotify = () => {
+  const today = new Date();
+  console.log(today.toString());
+  if (isSunday(today) && isThisHour(8)) {
+    notifyExams();
+  }
+};
+
+app.get("/", (req, res) => {
+  shouldNotify();
+});
+shouldNotify();
 
 app.listen(config.PORT, () => {
   console.log(`⚡️[server]: Server is running at ${config.PORT}`);
