@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === "production") {
   });
   bot.launch({
     webhook: {
-      domain: config.URL,
+      domain: config.URL + "extra",
       port: Number(config.PORT),
     },
   });
