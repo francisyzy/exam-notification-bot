@@ -42,12 +42,8 @@ if (process.env.NODE_ENV === "production") {
     }
     return next();
   });
-  bot.telegram.setWebhook(
-    `${config.URL}/telegramBot/${bot.secretPathComponent}`,
-  );
-  app.use(
-    bot.webhookCallback(`/telegramBot/${bot.secretPathComponent}`),
-  );
+  bot.telegram.setWebhook(`${config.URL}/telegramBot`);
+  app.use(bot.webhookCallback(`/telegramBot`));
 } else {
   //Development logging
   bot.use(Telegraf.log());
