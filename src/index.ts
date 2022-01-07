@@ -11,6 +11,7 @@ import catchAll from "./commands/catch-all";
 import parseURL from "./commands/parse";
 import { notifyExams } from "./utils/notifier";
 import { isSunday, isThisMinute, isThisHour } from "date-fns";
+import { application, Application } from "express";
 
 //Production Settings
 if (process.env.NODE_ENV === "production") {
@@ -53,6 +54,13 @@ if (process.env.NODE_ENV === "production") {
 
 helper();
 parseURL();
+application.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+application.listen(config.PORT, () => {
+  console.log(`Express listening`);
+});
 const today = new Date();
 console.log(today);
 if (isSunday(today) && isThisHour(9) && isThisMinute(15)) {
