@@ -42,12 +42,12 @@ if (process.env.NODE_ENV === "production") {
     }
     return next();
   });
-  bot.launch({
-    webhook: {
-      domain: config.URL + "extra",
-      port: Number(config.PORT),
-    },
-  });
+  bot.telegram.setWebhook(
+    `${config.URL}/telegramBot/${bot.secretPathComponent}`,
+  );
+  app.use(
+    bot.webhookCallback(`/telegramBot/${bot.secretPathComponent}`),
+  );
 } else {
   //Development logging
   bot.use(Telegraf.log());
