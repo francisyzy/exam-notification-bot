@@ -11,7 +11,9 @@ import catchAll from "./commands/catch-all";
 import parseURL from "./commands/parse";
 import { notifyExams } from "./utils/notifier";
 import { isSunday, isThisMinute, isThisHour } from "date-fns";
-import { application, Application } from "express";
+import express from "express";
+// rest of the code remains same
+const app = express();
 
 //Production Settings
 if (process.env.NODE_ENV === "production") {
@@ -54,18 +56,16 @@ if (process.env.NODE_ENV === "production") {
 
 helper();
 parseURL();
-application.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-application.listen(config.PORT, () => {
-  console.log(`Express listening`);
-});
+app.get("/", (req, res) => res.send("Express + TypeScript Server"));
 const today = new Date();
 console.log(today);
 if (isSunday(today) && isThisHour(9) && isThisMinute(15)) {
   notifyExams();
 }
+
+app.listen(config.PORT, () => {
+  console.log(`⚡️[server]: Server is running at ${config.PORT}`);
+});
 
 //Catch all unknown messages/commands
 catchAll();
