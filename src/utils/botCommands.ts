@@ -6,7 +6,7 @@ import { BotCommand } from "typegram";
 export function getBotCommands(): BotCommand[] {
   const BotCommand: BotCommand[] = [
     {
-      command: "Help",
+      command: "help",
       description: "Find out more on the bot",
     },
   ];
