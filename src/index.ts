@@ -10,7 +10,6 @@ import { toEscapeHTMLMsg } from "./utils/messageHandler";
 import catchAll from "./commands/catch-all";
 import parseURL from "./commands/parse";
 import { notifyExams } from "./utils/notifier";
-import { isSunday, isThisMinute, isThisHour } from "date-fns";
 import express from "express";
 // rest of the code remains same
 const app = express();
@@ -56,18 +55,10 @@ if (process.env.NODE_ENV === "production") {
 
 helper();
 parseURL();
-const shouldNotify = () => {
-  const today = new Date();
-  console.log(today.toString());
-  if (isSunday(today) && isThisHour(8)) {
-    notifyExams();
-  }
-};
 
 app.get(`/${config.NOTIFY_PATH}`, (req, res) => {
   notifyExams();
 });
-shouldNotify();
 
 app.listen(config.PORT, () => {
   console.log(`⚡️[server]: Server is running at ${config.PORT}`);

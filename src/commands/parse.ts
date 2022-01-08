@@ -1,21 +1,25 @@
 import bot from "../lib/bot";
 import { PrismaClient } from "@prisma/client";
 import { URL } from "url";
-import { checkExist, getModule } from "../utils/getData";
+import { checkExist, getConfig, getModule } from "../utils/getData";
 
 const prisma = new PrismaClient();
-
-const semester = 2;
 
 const parseURL = () => {
   bot.hears(/nusmods.com/, async (ctx) => {
     const inputURL = new URL(ctx.message.text);
     const modules: string[] = [];
+
+    //Get current configs from nusmod GH
+    const config = await getConfig();
+
+    //to print out list of modules
     let modulesString = "";
     for (const modCode of inputURL.searchParams.keys()) {
       modules.push(modCode);
       modulesString += `${modCode}, `;
     }
+    //Remove the last , and space
     modulesString = modulesString.slice(0, -2);
     if (modules.length === 0) {
       return ctx.reply(
@@ -32,10 +36,10 @@ const parseURL = () => {
 
     let examDates: Date[] = [];
     for await (const module of modules) {
-      if (await checkExist(module)) {
-        const examDate = (await getModule(module)).semesterData[
-          semester - 1
-        ].examDate;
+      if (await checkExist(module, config.academicYear)) {
+        const examDate = (
+          await getModule(module, config.academicYear)
+        ).semesterData[config.semester - 1].examDate;
         if (examDate) {
           examDates.push(new Date(examDate));
         }

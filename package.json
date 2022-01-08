@@ -10,6 +10,7 @@
     "generate": "prisma generate",
     "deploy": "prisma migrate deploy",
     "migrate": "prisma migrate dev",
+    "studio": "prisma studio",
     "reset": "prisma migrate reset"
   },
   "repository": {

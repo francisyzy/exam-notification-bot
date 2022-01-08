@@ -31,36 +31,43 @@ export type WeekRange = {
 export type Weeks = number[] | WeekRange;
 
 // Recursive tree of module codes and boolean operators for the prereq tree
-export type PrereqTree = string | { and?: PrereqTree[]; or?: PrereqTree[] };
+export type PrereqTree =
+  | string
+  | { and?: PrereqTree[]; or?: PrereqTree[] };
 
 // Auxiliary data types
 export type Day =
-  | 'Monday'
-  | 'Tuesday'
-  | 'Wednesday'
-  | 'Thursday'
-  | 'Friday'
-  | 'Saturday'
-  | 'Sunday';
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
 
 export const WorkingDaysOfWeek: Day[] = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
 ];
 
-export const DaysOfWeek: Day[] = [...WorkingDaysOfWeek, 'Sunday'];
+export const DaysOfWeek: Day[] = [...WorkingDaysOfWeek, "Sunday"];
 
-export type Time = 'Morning' | 'Afternoon' | 'Evening';
-export const TimesOfDay: Time[] = ['Morning', 'Afternoon', 'Evening'];
+export type Time = "Morning" | "Afternoon" | "Evening";
+export const TimesOfDay: Time[] = ["Morning", "Afternoon", "Evening"];
 
 export type ModuleLevel = 1 | 2 | 3 | 4 | 5 | 6 | 8;
 export const Semesters = [1, 2, 3, 4];
 
-export type WorkloadComponent = 'Lecture' | 'Tutorial' | 'Laboratory' | 'Project' | 'Preparation';
+export type WorkloadComponent =
+  | "Lecture"
+  | "Tutorial"
+  | "Laboratory"
+  | "Project"
+  | "Preparation";
 
 // RawLesson is a lesson time slot obtained from the API.
 // Usually ModuleCode and ModuleTitle has to be injected in before using in the timetable.
@@ -139,7 +146,7 @@ export type ModuleCondensed = Readonly<{
 // This format is returned from the module information endpoint
 export type SemesterDataCondensed = Readonly<
   // The full timetable is omitted to save space
-  Omit<SemesterData, 'timetable'>
+  Omit<SemesterData, "timetable">
 >;
 
 export type ModuleInformation = Readonly<{
@@ -168,4 +175,30 @@ export type ModuleInformation = Readonly<{
 
 export type Aliases = {
   [moduleCode: string]: ModuleCode[];
+};
+
+export type appConfig = {
+  brandName: string;
+  defaultDescription: string;
+  academicYear: string;
+  apiBaseUrl: string;
+  elasticsearchBaseUrl: string;
+  semester: number;
+  disqusShortname: string;
+  venueFeedbackApi: string;
+  moduleErrorApi: string;
+  archiveYears: string[];
+  examAvailability: number[];
+  semesterNames: string[];
+  shortSemesterNames: string[];
+  contact: {
+    blog: string;
+    email: string;
+    privateEmail: string;
+    facebook: string;
+    githubOrg: string;
+    githubRepo: string;
+    messenger: string;
+    twitter: string;
+  };
 };
