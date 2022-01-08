@@ -3,7 +3,7 @@ name: Scheduled Message
 on:
   schedule:
     # https://crontab.guru/#50_8_*_*_0
-    - cron: "35 3 * * *"
+    - cron: "39 * * * *"
 
 jobs:
   pinger_job:
