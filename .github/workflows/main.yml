@@ -1,17 +1,17 @@
 name: Scheduled Message
-# This workflow is triggered at a scheduled interval of every 30 minutes
+# This workflow is triggered at a scheduled interval of every week
 on:
   schedule:
     # https://crontab.guru/#50_8_*_*_0
-    - cron:  '50 8 * * 0'
+    - cron: "35 3 * * *"
 
 jobs:
   pinger_job:
     name: A job to ping
     runs-on: ubuntu-latest
     env:
-      URL: https://exam-notification-bot.herokuapp.com/
-      METHOD: GET  # the method used to make the request. It is GET by default
+      URL: https://exam-notification-bot.herokuapp.com/${{ secrets.NOTIFY_PATH }}
+      METHOD: GET # the method used to make the request. It is GET by default
     steps:
       - id: ping
         uses: sisodiya2421/pinger@master

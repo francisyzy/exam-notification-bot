@@ -60,8 +60,8 @@ const shouldNotify = () => {
   }
 };
 
-app.get("/", (req, res) => {
-  shouldNotify();
+app.get(`/${config.NOTIFY_PATH}`, (req, res) => {
+  notifyExams();
 });
 shouldNotify();
 
