@@ -1,4 +1,6 @@
 import got from "got";
+import { catAPIs } from "../types/catAPI";
+import { dogAPI } from "../types/dogAPI";
 import { Module } from "../types/nusmods";
 import { quote, quotes } from "../types/quotes";
 
@@ -28,4 +30,23 @@ export async function getQuote(): Promise<quote> {
   const randIndex = Math.floor(Math.random() * quotes.length);
 
   return quotes[randIndex];
+}
+
+export async function getCatURL(): Promise<string> {
+  const catAPI = (await got(
+    `https://api.thecatapi.com/v1/images/search`,
+  ).json()) as catAPIs;
+
+  return catAPI[0].url;
+}
+export async function getDogURL(): Promise<string> {
+  const dogAPI = await got(`https://random.dog/woof.json`).json() as dogAPI;
+
+  return dogAPI.url;
+}
+
+export async function numbersTrivia(number: number): Promise<string> {
+  const { body: body } = await got(`http://numbersapi.com/${number}`);
+
+  return body;
 }
