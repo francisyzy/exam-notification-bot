@@ -1,7 +1,16 @@
 import bot from "../lib/bot";
 import { PrismaClient } from "@prisma/client";
 import { URL } from "url";
-import { checkExist, getConfig, getModule } from "../utils/getData";
+import {
+  checkExist,
+  getCatURL,
+  getConfig,
+  getDogURL,
+  getModule,
+  getQuote,
+  numbersTrivia,
+} from "../utils/getData";
+import { formatDuration, intervalToDuration } from "date-fns";
 
 const prisma = new PrismaClient();
 
@@ -55,9 +64,44 @@ const parseURL = () => {
       where: { telegramId: ctx.from.id },
       data: { firstExam: examDates[0] },
     });
-    return ctx.reply(
-      `Your first exam is on the ${examDates[0].toString()}`,
-    );
+    const examDate = examDates[0];
+    let returnString = `Your first exam is on the ${examDate.toString()}, in ${formatDuration(
+      intervalToDuration({
+        start: new Date(),
+        end: examDate,
+      }),
+    )}\n\n`;
+    const random = Math.floor(Math.random() * 4);
+    let photoURL: string | undefined;
+    if (random === 0) {
+      const quote = await getQuote();
+      returnString += `<i>${quote.text} <u>${quote.author}</u></i>`;
+    } else if (random === 1) {
+      returnString += `<i>${await numbersTrivia(
+        intervalToDuration({
+          start: new Date(),
+          end: examDate,
+        }).hours || 9,
+      )}</i>`;
+    } else if (random === 2) {
+      photoURL = await getCatURL();
+    } else if (random === 3) {
+      photoURL = await getDogURL();
+    }
+    if (photoURL) {
+      return ctx
+        .replyWithPhoto(photoURL, {
+          caption: returnString,
+          parse_mode: "HTML",
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      return ctx.replyWithHTML(returnString).catch((e) => {
+        console.log(e);
+      });
+    }
   });
 };
 
