@@ -31,8 +31,12 @@ const parseURL = () => {
     //Remove the last , and space
     modulesString = modulesString.slice(0, -2);
     if (modules.length === 0) {
-      return ctx.reply(
-        "Please send your share/sync link. Like https://nusmods.com/timetable/sem-2/share?CS1231S=TUT:01,LEC:1&CS2106=LAB:02,TUT:09,LEC:1&ES2660=SEC:G16&GEC1015=LEC:3&MA1521=LEC:1,TUT:8",
+      return ctx.replyWithPhoto(
+        "https://user-images.githubusercontent.com/24467184/148671643-2d42be16-0d08-43b0-a133-e5423390d0ec.png",
+        {
+          caption:
+            "Please send your share/sync link. Something like https://nusmods.com/timetable/sem-2/share?CS1231S=TUT:01,LEC:1&CS2106=LAB:02,TUT:09,LEC:1&ES2660=SEC:G16&GEC1015=LEC:3&MA1521=LEC:1,TUT:8",
+        },
       );
     }
     await prisma.user.update({
