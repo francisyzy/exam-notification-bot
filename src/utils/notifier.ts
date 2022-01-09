@@ -1,6 +1,10 @@
 import bot from "../lib/bot";
 import { PrismaClient } from "@prisma/client";
-import { formatDuration, intervalToDuration } from "date-fns";
+import {
+  formatDuration,
+  intervalToDuration,
+  isBefore,
+} from "date-fns";
 import { sleep } from "./sleep";
 import {
   getCatURL,
@@ -18,6 +22,10 @@ export async function notifyExams(): Promise<void> {
 
   for await (const user of users) {
     if (user.firstExam) {
+      //If the exam period has started, skip notify
+      if (isBefore(user.firstExam, new Date())) {
+        continue;
+      }
       let returnString = `Your first exam is in ${formatDuration(
         intervalToDuration({
           start: new Date(),
