@@ -60,6 +60,10 @@ app.get(`/${config.NOTIFY_PATH}`, (req, res) => {
   notifyExams();
 });
 
+app.get("/", (req, res) => {
+  res.redirect("http://go.francisyzy.com/exam-reminder-bot-telegram");
+});
+
 app.listen(config.PORT, () => {
   console.log(`⚡️[server]: Server is running at ${config.PORT}`);
 });
