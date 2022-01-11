@@ -1,7 +1,7 @@
 import bot from "../lib/bot";
 import { PrismaClient } from "@prisma/client";
 import { getBotCommands } from "../utils/botCommands";
-import { notifyExams } from "../utils/notifier";
+import { notifyAllExams, notifyExams } from "../utils/notifier";
 import config from "../config";
 
 const prisma = new PrismaClient();
@@ -22,7 +22,21 @@ const helper = () => {
 
   bot.command("send", async (ctx) => {
     if (ctx.from.id === config.ADMIN_TELE_ID) {
-      notifyExams();
+      notifyAllExams();
+    }
+  });
+
+  bot.command("checkexam", async (ctx) => {
+    const user = await prisma.user.findUnique({
+      where: { telegramId: ctx.from.id },
+    });
+    if (user) {
+      const didNotify = await notifyExams(user);
+      if (!didNotify) {
+        return ctx.reply(
+          "You have yet to set your exam dates or your first exam is over",
+        );
+      }
     }
   });
 

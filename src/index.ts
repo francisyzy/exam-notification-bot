@@ -9,7 +9,7 @@ import helper from "./commands/helper";
 import { toEscapeHTMLMsg } from "./utils/messageHandler";
 import catchAll from "./commands/catch-all";
 import parseURL from "./commands/parse";
-import { notifyExams } from "./utils/notifier";
+import { notifyAllExams } from "./utils/notifier";
 import express from "express";
 // rest of the code remains same
 const app = express();
@@ -57,7 +57,7 @@ helper();
 parseURL();
 
 app.get(`/${config.NOTIFY_PATH}`, (req, res) => {
-  notifyExams();
+  notifyAllExams();
 });
 
 app.get("/", (req, res) => {

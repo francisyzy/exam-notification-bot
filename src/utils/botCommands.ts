@@ -10,6 +10,10 @@ export function getBotCommands(): BotCommand[] {
       command: "help",
       description: "Find out more on the bot",
     },
+    {
+      command: "checkexam",
+      description: "Check how many days you're from the exam",
+    },
   ];
 
   let botCommands: BotCommand[] = [];
