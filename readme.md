@@ -1,3 +1,5 @@
+Archived. Bot died because [heroku stopped offering free compute](https://devcenter.heroku.com/changelog-items/2502)
+
 # Exam-reminder-bot
 
 [HNR2022](http://go.francisyzy.com/wUTHXu)
